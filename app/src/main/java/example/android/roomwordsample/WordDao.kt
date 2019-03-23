@@ -1,5 +1,6 @@
 package example.android.roomwordsample
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
@@ -14,5 +15,5 @@ interface WordDao {
     fun deleteAll()
 
     @Query("SELECT * FROM word_table ORDER BY word ASC")
-    fun getAllWords(): List<Word>
+    fun getAllWords(): LiveData<List<Word>>
 }
