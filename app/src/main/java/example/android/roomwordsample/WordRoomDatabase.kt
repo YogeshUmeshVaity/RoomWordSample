@@ -13,6 +13,8 @@ abstract class WordRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: WordRoomDatabase? = null
 
+        // synchronized() is used to ensure that a shared resource(WordRoomDatabase in this case) is not
+        // used concurrently by multiple threads.
         fun getDatabase(context: Context): WordRoomDatabase { return INSTANCE ?: synchronized(this) {
                 return Room.databaseBuilder(
                     context.applicationContext,
