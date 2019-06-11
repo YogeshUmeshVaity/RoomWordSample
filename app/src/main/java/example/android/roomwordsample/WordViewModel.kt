@@ -11,16 +11,16 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: WordRepository
     private val allWords: LiveData<List<Word>>
 
-    init {
-        val wordsDao: WordDao = WordRoomDatabase.getDatabase(application).wordDao()
-        repository = WordRepository(wordsDao)
-        allWords = repository.allWords
-    }
-
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
         get() = parentJob + Dispatchers.Main
     private val scope = CoroutineScope(coroutineContext)
+
+    init {
+        val wordsDao: WordDao = WordRoomDatabase.getDatabase(application, scope).wordDao()
+        repository = WordRepository(wordsDao)
+        allWords = repository.allWords
+    }
 
     /**
      * onCleared is called when the ViewModel is no longer used and will be destroyed so,
